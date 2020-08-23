@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('init'){
+        stage('Environment'){
             steps{
                 // display java version
                 bat 'java -version'
@@ -10,15 +10,15 @@ pipeline {
                 bat 'mvn --version'
             }
         }
-        stage('build'){
+        stage('Build'){
             steps{
                 echo 'CI - Building Package'
                 bat 'javac ComplexApplication.java'
             }
         }
-        stage('test'){
+        stage('Run'){
             steps{
-                echo 'CI - Test Package'
+                echo 'CI - Running Package'
                 bat 'java ComplexApplication'
             }
         }
