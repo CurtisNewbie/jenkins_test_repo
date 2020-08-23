@@ -13,7 +13,6 @@ pipeline {
                 // when{
                 //     // only when something changed
                 //     changeset "*"
-                //     echo "Repo Changed"
                 // }
                 // display java version
                 bat 'java -version'
