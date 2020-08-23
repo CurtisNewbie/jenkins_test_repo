@@ -56,7 +56,7 @@ pipeline {
         // always do
         always{
             echo "CI Finished"
-            junit 'build/reports/**/*.xml'
+            // junit 'build/reports/**/*.xml'
         }
     }
 }
