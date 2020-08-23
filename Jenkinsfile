@@ -1,5 +1,3 @@
-Jenkinsfile (Declarative Plugin)
-
 pipeline {
     agent any
     stages {
