@@ -3,14 +3,15 @@ pipeline {
     environment{
         // declare environment variables
         JOB_NAME = 'Pipeline for testable_app'
-        TARGET_BRANCH = 'stable'
         // https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#usernames-and-passwords
-        CRED = credentials('global_cred')
+        // CRED = credentials('global_cred')
+        // CRED_USR
+        // CRED_PSW
     }
     stages {
         stage('Init'){
             steps{
-                echo JOB_NAME
+                echo "Job: %JOB_NAME"
                 // display java version
                 bat 'java -version'
                 bat 'javac -version'
@@ -41,19 +42,7 @@ pipeline {
                 // on 'dev' branch
                 branch 'dev'
             }
-            steps{
-                bat('''
-                    git config user.name "CurtisNewbie"
-                    git config user.email "CurtisNewbie@github.com"
-                ''')
-                // https://support.cloudbees.com/hc/en-us/articles/360027646491-Pipeline-Equivalent-to-Git-Publisher
-                bat('''
-                    git switch stable 
-                    git config --local credential.helper "!f() { echo username=\\$CRED_USR; echo password=\\$CRED_PSW; }; f"
-                    git merge dev 
-                    git push origin stable
-                ''')
-            }
+            echo "Deployed..." 
         }
     }
     // after all stages
@@ -65,6 +54,7 @@ pipeline {
         // always do
         always{
             echo "CI Finished"
+            junit 'build/reports/**/*.xml'
         }
     }
 }
