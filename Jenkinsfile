@@ -4,7 +4,7 @@ pipeline {
         // declare environment variables
         JOB_NAME = 'Pipeline for testable_app'
         STABLE_BRANCH_NAME = 'stable'
-        DEV_BRANCH_NAME = 'dev'
+        DEV_BRANCH_NAME = 'origin/dev'
     }
     stages {
         stage('Init'){
@@ -46,6 +46,7 @@ pipeline {
             steps{
                 bat "git switch $STABLE_BRANCH_NAME"
                 bat "git merge $DEV_BRANCH_NAME" 
+                bat "git push"
             }
         }
     }
