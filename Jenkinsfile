@@ -33,9 +33,11 @@ pipeline {
         stage('Deploy'){
             when{
                 expression{
-                    // SUCCESS and is on 'dev' branch
-                    (currentBuild.result == null || currentBuild.result == 'SUCCESS') && branch 'dev'
+                    // SUCCESS build
+                    currentBuild.result == null || currentBuild.result == 'SUCCESS' 
                 }
+                // on 'dev' branch
+                branch 'dev'
             }
             steps{
                 withCredentials([usernamePassword(credentialsId: 'repoCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
