@@ -1,13 +1,18 @@
 pipeline {
     agent any
+    environment{
+        // declare environment variables
+        JOB_NAME = 'Pipeline for testable_app'
+    }
     stages {
-        stage('Environment'){
+        stage('Init'){
             steps{
                 // display java version
                 bat 'java -version'
                 bat 'javac -version'
                 // display mvn version
                 bat 'mvn --version'
+                echo JOB_NAME
             }
         }
         stage('Build'){
@@ -24,6 +29,26 @@ pipeline {
                 // bat 'java ComplexApplication'
             }
         }
+        stage('Deploy'){
+            when{
+                expression{
+                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
+            }
+            steps{
+                bat ''
+            }
+        }
     }
-
+    // after all stages
+    post {
+        // only on failure
+        failure{
+            echo "CI Failed"
+        }
+        // always do
+        always{
+            echo "CI Finished"
+        }
+    }
 }
