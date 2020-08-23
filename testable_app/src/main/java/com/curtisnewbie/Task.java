@@ -8,9 +8,8 @@ public class Task {
 
     public static int sum(int[] nums) {
         int sum = 0;
-        // TODO: intended
-//        for (int n : nums)
-//            sum += n;
+        for (int n : nums)
+            sum += n;
         return sum;
     }
 
