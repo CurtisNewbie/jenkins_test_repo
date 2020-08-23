@@ -5,7 +5,7 @@ pipeline {
         JOB_NAME = 'Pipeline for testable_app'
         TARGET_BRANCH = 'stable'
         // https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#usernames-and-passwords
-        CRED = credentials('repoCredentials')
+        CRED = credentials('global_cred')
     }
     stages {
         stage('Init'){
