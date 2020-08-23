@@ -11,7 +11,6 @@ pipeline {
     stages {
         stage('Init'){
             steps{
-                echo "Job: %JOB_NAME"
                 // display java version
                 bat 'java -version'
                 bat 'javac -version'
