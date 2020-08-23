@@ -42,10 +42,16 @@ pipeline {
                 branch 'dev'
             }
             steps{
+                bat('''
+                    git config user.name "CurtisNewbie"
+                    git config user.email "CurtisNewbie@github.com"
+                ''')
                 // https://support.cloudbees.com/hc/en-us/articles/360027646491-Pipeline-Equivalent-to-Git-Publisher
                 bat('''
+                    git switch stable 
                     git config --local credential.helper "!f() { echo username=\\$CRED_USR; echo password=\\$CRED_PSW; }; f"
-                    git push origin stable 
+                    git merge dev 
+                    git push origin stable
                 ''')
             }
         }
