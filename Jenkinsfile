@@ -13,13 +13,13 @@ pipeline {
         stage('build'){
             steps{
                 echo 'CI - Building Package'
-                bat 'javac Jenkinsfile.java'
+                bat 'javac ComplexApplication.java'
             }
         }
         stage('test'){
             steps{
                 echo 'CI - Test Package'
-                bat 'java Jenkinsfile'
+                bat 'java ComplexApplication'
             }
         }
     }
