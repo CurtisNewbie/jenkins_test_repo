@@ -3,23 +3,17 @@ pipeline {
     environment{
         // declare environment variables
         JOB_NAME = 'Pipeline for testable_app'
-        STABLE_BRANCH_NAME = 'stable'
-        DEV_BRANCH_NAME = 'origin/dev'
+        TARGET_BRANCH = 'stable'
     }
     stages {
         stage('Init'){
             steps{
-                // TODO: doesn't seem to work
-                // when{
-                //     // only when something changed
-                //     changeset "*"
-                // }
+                echo JOB_NAME
                 // display java version
                 bat 'java -version'
                 bat 'javac -version'
                 // display mvn version
                 bat 'mvn --version'
-                echo JOB_NAME
             }
         }
         stage('Build'){
@@ -39,13 +33,18 @@ pipeline {
         stage('Deploy'){
             when{
                 expression{
-                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                    // SUCCESS and is on 'dev' branch
+                    (currentBuild.result == null || currentBuild.result == 'SUCCESS') && branch 'dev'
                 }
             }
             steps{
-                bat "git switch $STABLE_BRANCH_NAME"
-                bat "git merge $DEV_BRANCH_NAME" 
-                bat "git push"
+                withCredentials([usernamePassword(credentialsId: 'repoCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
+
+                bat('''
+                    git config --local credential.helper "!f() { echo username=\\$USERNAME; echo password=\\$PASSWORD; }; f"
+                    git push origin HEAD:$TARGET_BRANCH
+                ''')
+                }
             }
         }
     }
