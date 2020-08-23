@@ -20,7 +20,7 @@ pipeline {
         stage('Test'){
             steps{
                 echo 'CI - Testing Package'
-                bat 'mvn test'
+                bat 'mvn -f testable_app test'
                 // bat 'java ComplexApplication'
             }
         }
