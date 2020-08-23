@@ -4,6 +4,8 @@ pipeline {
         // declare environment variables
         JOB_NAME = 'Pipeline for testable_app'
         TARGET_BRANCH = 'stable'
+        // https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#usernames-and-passwords
+        CRED = credentials('repoCredentials')
     }
     stages {
         stage('Init'){
@@ -40,13 +42,11 @@ pipeline {
                 branch 'dev'
             }
             steps{
-                withCredentials([usernamePassword(credentialsId: 'repoCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
-
+                // https://support.cloudbees.com/hc/en-us/articles/360027646491-Pipeline-Equivalent-to-Git-Publisher
                 bat('''
-                    git config --local credential.helper "!f() { echo username=\\$USERNAME; echo password=\\$PASSWORD; }; f"
+                    git config --local credential.helper "!f() { echo username=\\$CRED_USR; echo password=\\$CRED_PSW; }; f"
                     git push origin HEAD:$TARGET_BRANCH
                 ''')
-                }
             }
         }
     }
