@@ -42,7 +42,9 @@ pipeline {
                 // on 'dev' branch
                 branch 'dev'
             }
-            echo "Deployed..." 
+            steps{
+                echo "Deployed..." 
+            }
         }
     }
     // after all stages
