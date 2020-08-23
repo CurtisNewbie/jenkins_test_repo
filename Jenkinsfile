@@ -3,14 +3,18 @@ pipeline {
     environment{
         // declare environment variables
         JOB_NAME = 'Pipeline for testable_app'
+        STABLE_BRANCH_NAME = 'stable'
+        DEV_BRANCH_NAME = 'dev'
     }
     stages {
         stage('Init'){
             steps{
-                when{
-                    // only when something changed
-                    changeset "*"
-                }
+                // TODO: doesn't seem to work
+                // when{
+                //     // only when something changed
+                //     changeset "*"
+                //     echo "Repo Changed"
+                // }
                 // display java version
                 bat 'java -version'
                 bat 'javac -version'
@@ -40,7 +44,8 @@ pipeline {
                 }
             }
             steps{
-                bat ''
+                bat "git switch $STABLE_BRANCH_NAME"
+                bat "git merge $DEV_BRANCH_NAME" 
             }
         }
     }
