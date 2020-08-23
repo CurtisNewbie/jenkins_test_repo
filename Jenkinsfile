@@ -13,7 +13,7 @@ pipeline {
         stage('Build'){
             steps{
                 echo 'CI - Building Package'
-                bat 'mvn clean compile'
+                bat 'mvn -f testable_app clean compile'
                 // bat 'javac ComplexApplication.java'
             }
         }
