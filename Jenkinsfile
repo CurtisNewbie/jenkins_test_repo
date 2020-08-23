@@ -13,13 +13,15 @@ pipeline {
         stage('Build'){
             steps{
                 echo 'CI - Building Package'
-                bat 'javac ComplexApplication.java'
+                bat 'mvn clean compile'
+                // bat 'javac ComplexApplication.java'
             }
         }
-        stage('Run'){
+        stage('Test'){
             steps{
-                echo 'CI - Running Package'
-                bat 'java ComplexApplication'
+                echo 'CI - Testing Package'
+                bat 'mvn test'
+                // bat 'java ComplexApplication'
             }
         }
     }
