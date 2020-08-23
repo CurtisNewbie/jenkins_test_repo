@@ -7,6 +7,10 @@ pipeline {
     stages {
         stage('Init'){
             steps{
+                when{
+                    // only when something changed
+                    changeset "*"
+                }
                 // display java version
                 bat 'java -version'
                 bat 'javac -version'
