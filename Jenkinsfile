@@ -45,7 +45,7 @@ pipeline {
                 // https://support.cloudbees.com/hc/en-us/articles/360027646491-Pipeline-Equivalent-to-Git-Publisher
                 bat('''
                     git config --local credential.helper "!f() { echo username=\\$CRED_USR; echo password=\\$CRED_PSW; }; f"
-                    git push origin \$TARGET_BRANCH
+                    git push origin stable 
                 ''')
             }
         }
